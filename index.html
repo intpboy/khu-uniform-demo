@@ -8,8 +8,6 @@
   @font-face {
     font-family: 'RaconBold';
     src: url('racon-basic-bold-s.otf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
   }
 
   body {
@@ -21,8 +19,10 @@
     justify-content: center;
   }
 
+  /* 🔥 여기서 가로 → 세로 고정 */
   .app {
     display: flex;
+    flex-direction: column;   /* ✔ 항상 세로 */
     gap: 24px;
     max-width: 1100px;
     width: 100%;
@@ -33,7 +33,6 @@
     border-radius: 16px;
     padding: 20px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-    flex: 1;
   }
 
   h2 {
@@ -42,7 +41,6 @@
     margin-bottom: 12px;
   }
 
-  /* 원본 앞/뒷면 가로 배치 */
   .original-row {
     display: flex;
     gap: 16px;
@@ -52,7 +50,7 @@
   }
 
   .original-row img {
-    max-width: 220px;   /* 참고용 이미지 크기 여기서 조절 */
+    max-width: 220px;
     width: 100%;
     height: auto;
     border-radius: 8px;
@@ -73,12 +71,6 @@
     font-size: 14px;
     border-radius: 8px;
     border: 1px solid #d1d5db;
-    outline: none;
-  }
-
-  input:focus {
-    border-color: #7f1d1d;
-    box-shadow: 0 0 0 1px #7f1d1d20;
   }
 
   .preview-wrapper {
@@ -98,7 +90,7 @@
     transform: translateX(-50%);
     text-align: center;
     color: #7f1d1d; 
-    font-family: 'RaconBold', sans-serif;
+    font-family: 'RaconBold';
     text-transform: uppercase;
     z-index: 2;
     pointer-events: none;
@@ -107,8 +99,8 @@
   #name-text {
     top: 18%;
     font-size: 37px;
-    letter-spacing: 0.3px;
     font-weight: 700;
+    letter-spacing: 0.3px;
   }
 
   #number-text {
@@ -117,31 +109,6 @@
     font-weight: 900;
     line-height: 0.8;
   }
-
-  /* 🔻 여기부터 모바일 레이아웃용 🔻 */
-  @media (max-width: 768px) {
-    body {
-      padding: 16px;
-    }
-
-    .app {
-      flex-direction: column;   /* ← 모바일에서 위아래로 쌓이게 */
-    }
-
-    .panel {
-      width: 100%;
-    }
-
-    .original-row {
-      flex-direction: row;
-      gap: 12px;
-    }
-
-    .original-row img {
-      max-width: 45%;   /* 모바일에서 너무 크지 않게 조정 */
-    }
-  }
-
 </style>
 </head>
 
@@ -149,7 +116,6 @@
 <body>
   <div class="app">
 
-    <!-- 원본 미리보기 패널 -->
     <div class="panel">
       <h2>원본 디자인 (참고용)</h2>
 
@@ -159,25 +125,23 @@
       </div>
     </div>
 
-    <!-- 커스텀 미리보기 패널 -->
     <div class="panel">
-      <h2>커스텀해보기</h2>
+      <h2>커스텀해보자 ✏️</h2>
 
-      <label for="name-input">선수명</label>
+      <label for="name-input">선수명(영문 3~8자)</label>
       <input id="name-input" type="text" value="MANSA">
 
-      <label for="num-input">등번호</label>
+      <label for="num-input">등번호(숫자 1~2자)</label>
       <input id="num-input" type="number" value="25">
 
       <div class="preview-wrapper">
         <img id="blank-img" src="khu_back_blank.png" alt="유니폼 뒷면">
-        <div id="name-text"   class="overlay-text">MANSA</div>
+        <div id="name-text" class="overlay-text">MANSA</div>
         <div id="number-text" class="overlay-text">25</div>
       </div>
     </div>
 
   </div>
-
 
 <script>
   const nameInput   = document.getElementById("name-input");
@@ -193,5 +157,6 @@
     numberText.textContent = numInput.value || "";
   });
 </script>
+
 </body>
 </html>
