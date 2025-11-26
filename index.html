@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>KHU 유니폼 미리보기</title>
+
+<style>
+  /* -----------------------------------------------------
+     1) 네가 가진 OTF 폰트 등록
+        - 폰트 파일: racon-basic-bold-s.otf
+        - 반드시 index.html과 같은 폴더에 넣기
+  ----------------------------------------------------- */
+  @font-face {
+    font-family: 'RaconBold';
+    src: url('racon-basic-bold-s.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  body {
+    margin: 0;
+    padding: 32px;
+    font-family: system-ui, sans-serif;
+    background: #f3f4f6;
+    display: flex;
+    justify-content: center;
+  }
+
+  .app {
+    display: flex;
+    gap: 24px;
+    max-width: 1100px;
+    width: 100%;
+  }
+
+  .panel {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    flex: 1;
+  }
+
+  h2 {
+    margin-top: 0;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .original-img {
+    width: 100%;
+    display: block;
+  }
+
+  label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  input[type="text"],
+  input[type="number"] {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 4px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    outline: none;
+  }
+
+  input:focus {
+    border-color: #7f1d1d;
+    box-shadow: 0 0 0 1px #7f1d1d20;
+  }
+
+  /* -----------------------------------------------------
+     2) 커스텀 미리보기 이미지 위에 글자가 얹히는 구조
+  ----------------------------------------------------- */
+  .preview-wrapper {
+    position: relative;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .preview-wrapper img {
+    width: 100%;
+    display: block;
+  }
+
+  /* -----------------------------------------------------
+     3) 오버레이 텍스트 공통 스타일
+        - font-family: 'RaconBold' → 네 폰트 적용됨
+  ----------------------------------------------------- */
+  .overlay-text {
+    position: absolute;
+    left: 51%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: #7f1d1d; 
+    font-family: 'RaconBold', sans-serif;
+    text-transform: uppercase;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* -----------------------------------------------------
+     4) 선수명(position + size 조절)
+        → top: 위치 (%)  /  font-size: 크기(px)
+        ★★★ 이 부분 조절하면 이름 위치와 크기 바뀜
+  ----------------------------------------------------- */
+  #name-text {
+    top: 18%;          /* ← 이름 세로 위치 조절 (% 높이면 위로 올라감) */
+    font-size: 37px;   /* ← 이름 글자 크기(px) 조절 */
+    letter-spacing: 2px;
+    font-weight: 700;
+  }
+
+  /* -----------------------------------------------------
+     5) 등번호(position + size 조절)
+        → top: 위치 (%)  /  font-size: 크기(px)
+        ★★★ 이 부분 조절하면 등번호 위치와 크기 바뀜
+  ----------------------------------------------------- */
+  #number-text {
+    top: 30%;            /* ← 번호 세로 위치 조절 */
+    font-size: 116px;    /* ← 번호 글자 크기(px) */
+    font-weight: 900;
+    line-height: 0.8;
+  }
+
+</style>
+</head>
+
+<body>
+  <div class="app">
+
+    <!-- -----------------------------------------------
+         왼쪽: 글자가 들어 있는 기존 PNG를 그대로 보여줌
+    --------------------------------------------------- -->
+    <div class="panel">
+      <h2>원본 디자인 (참고용)</h2>
+      <img src="khu_back_original.png" class="original-img" alt="원본">
+    </div>
+
+
+    <!-- -----------------------------------------------
+         오른쪽: 글자 제거된 PNG + 실시간 입력 미리보기
+    --------------------------------------------------- -->
+    <div class="panel">
+      <h2>커스텀 미리보기</h2>
+
+      <label for="name-input">선수명</label>
+      <input id="name-input" type="text" value="MANSA">
+
+      <label for="num-input">등번호</label>
+      <input id="num-input" type="number" value="25">
+
+
+      <div class="preview-wrapper">
+        <!-- 글자 제거된 뒷면 PNG -->
+        <img id="blank-img" src="khu_back_blank.png" alt="유니폼 뒷면">
+
+        <!-- 여기에 글자가 얹힘 -->
+        <div id="name-text"   class="overlay-text">MANSA</div>
+        <div id="number-text" class="overlay-text">25</div>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+  /* -----------------------------------------------
+     JS → 입력값이 바뀌면 바로 화면에 반영
+  ------------------------------------------------- */
+  const nameInput   = document.getElementById("name-input");
+  const numInput    = document.getElementById("num-input");
+  const nameText    = document.getElementById("name-text");
+  const numberText  = document.getElementById("number-text");
+
+  nameInput.addEventListener("input", () => {
+    nameText.textContent = (nameInput.value || "").toUpperCase();
+  });
+
+  numInput.addEventListener("input", () => {
+    numberText.textContent = numInput.value || "";
+  });
+
+</script>
+</body>
+</html>
