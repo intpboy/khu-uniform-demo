@@ -132,36 +132,34 @@
 </style>
 </head>
 
+
 <body>
   <div class="app">
 
-    <!-- -----------------------------------------------
-         왼쪽: 글자가 들어 있는 기존 PNG를 그대로 보여줌
-    --------------------------------------------------- -->
     <div class="panel">
       <h2>원본 디자인 (참고용)</h2>
       <img src="khu_back_original.png" class="original-img" alt="원본">
     </div>
 
-
-    <!-- -----------------------------------------------
-         오른쪽: 글자 제거된 PNG + 실시간 입력 미리보기
-    --------------------------------------------------- -->
     <div class="panel">
       <h2>커스텀 미리보기</h2>
 
-      <label for="name-input">선수명(영문 3~8자)</label>
+      <label for="name-input">선수명</label>
       <input id="name-input" type="text" value="MANSA">
 
-      <label for="num-input">등번호(1~2자리 숫자)</label>
+      <label for="num-input">등번호</label>
       <input id="num-input" type="number" value="25">
 
+      <!-- ★★★ 이름 글씨 크기 조절 -->
+      <label for="name-size-input">이름 글씨 크기(px)</label>
+      <input id="name-size-input" type="number" value="37">
+
+      <!-- ★★★ 번호 글씨 크기 조절 -->
+      <label for="number-size-input">등번호 글씨 크기(px)</label>
+      <input id="number-size-input" type="number" value="116">
 
       <div class="preview-wrapper">
-        <!-- 글자 제거된 뒷면 PNG -->
         <img id="blank-img" src="khu_back_blank.png" alt="유니폼 뒷면">
-
-        <!-- 여기에 글자가 얹힘 -->
         <div id="name-text"   class="overlay-text">MANSA</div>
         <div id="number-text" class="overlay-text">25</div>
       </div>
@@ -169,23 +167,37 @@
 
   </div>
 
+
 <script>
-  /* -----------------------------------------------
-     JS → 입력값이 바뀌면 바로 화면에 반영
-  ------------------------------------------------- */
   const nameInput   = document.getElementById("name-input");
   const numInput    = document.getElementById("num-input");
   const nameText    = document.getElementById("name-text");
   const numberText  = document.getElementById("number-text");
 
+  const nameSizeInput   = document.getElementById("name-size-input");    // ★★★
+  const numberSizeInput = document.getElementById("number-size-input");  // ★★★
+
+  // 이름 텍스트 변경
   nameInput.addEventListener("input", () => {
     nameText.textContent = (nameInput.value || "").toUpperCase();
   });
 
+  // 번호 텍스트 변경
   numInput.addEventListener("input", () => {
     numberText.textContent = numInput.value || "";
   });
 
+  // ★★★ 이름 글씨 크기 변경
+  nameSizeInput.addEventListener("input", () => {
+    const size = parseInt(nameSizeInput.value) || 1;
+    nameText.style.fontSize = size + "px";
+  });
+
+  // ★★★ 번호 글씨 크기 변경
+  numberSizeInput.addEventListener("input", () => {
+    const size = parseInt(numberSizeInput.value) || 1;
+    numberText.style.fontSize = size + "px";
+  });
 </script>
 </body>
 </html>
