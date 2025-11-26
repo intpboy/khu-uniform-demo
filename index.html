@@ -64,13 +64,23 @@
 
   input[type="text"],
   input[type="number"] {
-    width: 100%;
+    /* width: 100%;  ← 이 줄 지우거나 주석 처리 */
+
+    width: 260px;          /* 🔹 원하는 가로 길이 */
+    max-width: 100%;       /* 너무 작은 화면에서는 자동으로 줄어들게 */
+    display: block;        /* 가운데 정렬용 */
     padding: 8px 10px;
     margin-top: 4px;
     margin-bottom: 12px;
     font-size: 14px;
     border-radius: 8px;
     border: 1px solid #d1d5db;
+  }
+
+  /* 라벨+입력칸 전체를 조금 줄이고 싶으면 */
+  label {
+    display: block;
+    max-width: 260px;      /* input이랑 폭 맞추기 */
   }
 
   .preview-wrapper {
