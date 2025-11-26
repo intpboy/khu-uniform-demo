@@ -33,8 +33,7 @@
     border-radius: 16px;
     padding: 20px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-    flex: none;
-    width: auto;
+    flex: 1;
   }
 
   h2 {
@@ -43,7 +42,7 @@
     margin-bottom: 12px;
   }
 
-  /* 가로 정렬용 컨테이너 */
+  /* 원본 앞/뒷면 가로 배치 */
   .original-row {
     display: flex;
     gap: 16px;
@@ -52,9 +51,8 @@
     margin-top: 8px;
   }
 
-  /* 원본 이미지 크기 */
   .original-row img {
-    max-width: 300px;
+    max-width: 220px;   /* 참고용 이미지 크기 여기서 조절 */
     width: 100%;
     height: auto;
     border-radius: 8px;
@@ -120,6 +118,30 @@
     line-height: 0.8;
   }
 
+  /* 🔻 여기부터 모바일 레이아웃용 🔻 */
+  @media (max-width: 768px) {
+    body {
+      padding: 16px;
+    }
+
+    .app {
+      flex-direction: column;   /* ← 모바일에서 위아래로 쌓이게 */
+    }
+
+    .panel {
+      width: 100%;
+    }
+
+    .original-row {
+      flex-direction: row;
+      gap: 12px;
+    }
+
+    .original-row img {
+      max-width: 45%;   /* 모바일에서 너무 크지 않게 조정 */
+    }
+  }
+
 </style>
 </head>
 
@@ -133,18 +155,18 @@
 
       <div class="original-row">
         <img src="khu_front_original.png" alt="전면">
-        <img src="khu_back_original.png" alt="후면">
+        <img src="khu_back_original.png"  alt="후면">
       </div>
     </div>
 
     <!-- 커스텀 미리보기 패널 -->
     <div class="panel">
-      <h2>커스텀해보자✏️</h2>
+      <h2>커스텀해보기</h2>
 
-      <label for="name-input">선수명(영문 3~8자)</label>
+      <label for="name-input">선수명</label>
       <input id="name-input" type="text" value="MANSA">
 
-      <label for="num-input">등번호(숫자 1~2자)</label>
+      <label for="num-input">등번호</label>
       <input id="num-input" type="number" value="25">
 
       <div class="preview-wrapper">
@@ -163,12 +185,10 @@
   const nameText    = document.getElementById("name-text");
   const numberText  = document.getElementById("number-text");
 
-  // 이름 텍스트 변경
   nameInput.addEventListener("input", () => {
     nameText.textContent = (nameInput.value || "").toUpperCase();
   });
 
-  // 번호 텍스트 변경
   numInput.addEventListener("input", () => {
     numberText.textContent = numInput.value || "";
   });
